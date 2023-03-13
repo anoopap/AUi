@@ -1,0 +1,362 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Net.Imap4</name>
+    </assembly>
+    <members>
+        <member name="T:System.Net.Imap4.Imap4Attachment">
+            <summary>
+            Container class for an attachment
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Attachment.Name">
+            <summary>
+            Filename
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Attachment.Type">
+            <summary>
+            File type
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Attachment.Encoding">
+            <summary>
+            Encoding
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Attachment.Data">
+            <summary>
+            Attachment data
+            </summary>
+        </member>
+        <member name="T:System.Net.Imap4.Imap4Client">
+            <summary>
+            Working implementation of the IMAP4 client protocol
+            </summary>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.#ctor">
+            <summary>
+            Imap4 client implementation
+            </summary>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.Connect(System.String,System.Int32,System.Boolean)">
+            <summary>
+            Connect to imap4 server
+            </summary>
+            <param name="server">name or ip of server to connect to</param>
+            <param name="port">port number to use</param>
+            <param name="ssl">should we use ssl to connect</param>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.Connect(System.String,System.Int32)">
+            <summary>
+            Connect to imap4 server (SSL turned off)
+            </summary>
+            <param name="server">name or ip of server to connect to</param>
+            <param name="port">should we use ssl to connect</param>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.Connect(System.String)">
+            <summary>
+            Connect to imap4 server (SSL turned off, using port 143)
+            </summary>
+            <param name="server">name or ip of server to connect to</param>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.Disconnect">
+            <summary>
+            Send logoff command and disconnect from server
+            </summary>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.GetServerCapabilities">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.SendAuthUserPass(System.String,System.String,System.Net.Imap4.Imap4Client.AuthTypes)">
+            <summary>
+            Send username and password authorisation
+            supports only AUTH=PLAIN for now
+            </summary>
+            <param name="user">email account username</param>
+            <param name="pass">email account password</param>
+            <param name="authType">Authorisation type to use</param>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.ListFolders(System.String)">
+            <summary>
+            List all folders based in the filter
+            </summary>
+            <param name="filter">Filter to apply to required list</param>
+            <returns>List of all folders matching the filter</returns>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.SelectFolder(System.String)">
+            <summary>
+            Select the folder to use
+            </summary>
+            <param name="folder">Name of the folder to use. e.g. INBOX</param>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.GetEmailCount">
+            <summary>
+            Get the total number of emails in this folder, same as AvailableEmails
+            </summary>
+            <returns>AvailableEmails</returns>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.GetEmailRaw(System.UInt32)">
+            <summary>
+            Returns raw mail data for <param name="id">specified id</param>
+            </summary>
+            <param name="id">Mail ID</param>
+            <returns>Raw mail data</returns>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.GetEmail(System.UInt32)">
+            <summary>
+            Returns parsed mail data as Imap4Message for <paramref name="id">specified id</paramref>
+            </summary>
+            <param name="id">Mail ID</param>
+            <returns>Imap4Message parsed mail</returns>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.DeleteEmail(System.UInt32)">
+            <summary>
+            Sets the deleted flag and moves to \\Deleted folder
+            </summary>
+            <param name="id">Mail ID</param>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.Wait">
+            <summary>
+            Causes the client to wait for the server to do something/anything
+            </summary>
+            <returns>Reason for cancelling wait</returns>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.CancelWait">
+            <summary>
+            Cancels a previous call to Wait()
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.SetFlag(System.UInt32,System.String)">
+            <summary>
+            Set a flag on an email
+            </summary>
+            <param name="id">ID of the email to set</param>
+            <param name="flag">Flag to set, must begin with backslash</param>
+            <returns>true on set, false on not set</returns>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.RemoveFlag(System.UInt32,System.String)">
+            <summary>
+            Unset a flag on an email
+            </summary>
+            <param name="id">ID of the email to unset</param>
+            <param name="flag">Flag to unset, must begin with backslash</param>
+            <returns>true on unset, false on not unset</returns>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Client.MarkAsRead(System.UInt32)">
+            <summary>
+            Shortcut for SetFlag, with Seen already set
+            </summary>
+            <param name="id">ID of email to mark as read</param>
+            <returns>true on set, false on not set</returns>
+        </member>
+        <member name="E:System.Net.Imap4.Imap4Client.WaitInterupted">
+            <summary>
+            Event called when a call to Wait() is interupted
+            </summary>
+        </member>
+        <member name="E:System.Net.Imap4.Imap4Client.NewMailReceived">
+            <summary>
+            Event called when a call to Wait() is interupted with a new mail
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Client.CurrentFolder">
+            <summary>
+            The current folder the client is using
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Client.AvailableEmails">
+            <summary>
+            Total number of availble emails
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Client.RecentEmails">
+            <summary>
+            Number of recent emails
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Client.UnreadEmails">
+            <summary>
+            Number of unread emails
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Client.ServerCapabilities">
+            <summary>
+            List of capabilities recieved from the server
+            </summary>
+        </member>
+        <member name="T:System.Net.Imap4.Imap4Client.WaitInteruptedD">
+            <summary>
+            Delegate for interupt to a Wait() call
+            </summary>
+            <param name="sender">Imap4Client instance which triggered this call</param>
+            <param name="res">Response recieved</param>
+        </member>
+        <member name="T:System.Net.Imap4.Imap4Client.NewMailReceivedD">
+            <summary>
+            Delegate for interupt to a Wait() call with a new mail
+            </summary>
+            <param name="sender">Imap4Client instance which triggered this call</param>
+            <param name="res">Response recieved</param>
+        </member>
+        <member name="T:System.Net.Imap4.Imap4Exception">
+            <summary>
+            IMAP4 protocol specific exception
+            </summary>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Exception.#ctor(System.String)">
+            <summary>
+            IMAP4 protocol specific exception
+            </summary>
+            <param name="msg">Protocol message</param>
+        </member>
+        <member name="T:System.Net.Imap4.Imap4Header">
+            <summary>
+            IMAP4 message header
+            </summary>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Header.#ctor(System.String,System.String)">
+            <summary>
+            Create a Name/Value combo
+            </summary>
+            <param name="n">Header name</param>
+            <param name="v">Header value</param>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Header.Name">
+            <summary>
+            Header name
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Header.Value">
+            <summary>
+            Header value
+            </summary>
+        </member>
+        <member name="T:System.Net.Imap4.Imap4HeaderList">
+            <summary>
+            List of headers
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4HeaderList.Item(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+        </member>
+        <member name="T:System.Net.Imap4.Imap4Message">
+            <summary>
+            Digested Imap4 mail message
+            </summary>
+        </member>
+        <member name="F:System.Net.Imap4.Imap4Message.MimeTypeHandler">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Message.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:System.Net.Imap4.Imap4Message.ParseRawMessage(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="raw"></param>
+            <returns></returns>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.Attachments">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.Headers">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.Body">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.BodyText">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.BodyHtml">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.Subject">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.From">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.To">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.ReplyTo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.MimeVersion">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.ContentType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.ContentBoundary">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.Date">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.IsReply">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.IsReceipt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:System.Net.Imap4.Imap4Message.Raw">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:System.Net.Imap4.Imap4Message.MimeTypeHandlerCB">
+            <summary>
+            
+            </summary>
+            <param name="mimetype"></param>
+            <param name="lines"></param>
+            <param name="start"></param>
+            <param name="msg"></param>
+        </member>
+    </members>
+</doc>
