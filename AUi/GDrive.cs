@@ -42,16 +42,18 @@ namespace AUi
             {
                 HttpClientInitializer = credential
             });
-
             var listitems = service.Files.List();
-            listitems.Q = "parents in '" + Parentid + "' and mimeType = 'application/vnd.google-apps.folder'";
+            listitems.Q = "parents in '"+Parentid+"' and mimeType = 'application/vnd.google-apps.folder' and trashed = false";
+            listitems.IncludeItemsFromAllDrives = true;
+            listitems.SupportsAllDrives = true;
+            listitems.SupportsTeamDrives = true;
             var result = listitems.Execute();
             fe.FolderFound = false;
             fe.FolderID = "";
             foreach (var file in result.Files)
             {
                 if (FolderName == file.Name)
-                {                  
+                {
                     fe.FolderFound = true;
                     fe.FolderID = file.Id;
                 }
@@ -99,11 +101,15 @@ namespace AUi
             var listitems = service.Files.List();
             listitems.PageSize = 1000;
             listitems.Q = $"'{Parentid}' in parents and trashed = false";
+
+            listitems.IncludeItemsFromAllDrives = true;
+            listitems.SupportsAllDrives = true;
+            listitems.SupportsTeamDrives = true;
             var result = listitems.Execute();
            
             foreach (var file in result.Files)
             {
-                fe.FileID = Parentid;
+                fe.FileID = file.Id;
                 fe.FileName = file.Name;
                 fe.Webview = file.WebContentLink;
                 fe.WebViewLink = file.WebViewLink;
@@ -178,6 +184,7 @@ namespace AUi
             });
 
             var request = service.Files.Get(source_fileid);
+            request.SupportsAllDrives = true;
             var mimetype = request.Execute().MimeType;
             var filename = request.Execute().Name;
 
@@ -201,6 +208,7 @@ namespace AUi
 
             var request2 = service.Files.Copy(fileMetadata, source_fileid);
             request2.Fields = "id";
+            request2.SupportsAllDrives = true;
             var result = request2.Execute();
             GFile filedata = new GFile();
             filedata.WebViewLink = result.WebViewLink;
@@ -248,6 +256,7 @@ namespace AUi
             // Create a new folder on drive.
             var request = service.Files.Create(fileMetadata);
             request.Fields = "id";
+            request.SupportsAllDrives= true;
             var result = request.Execute();
             return (result.Id);
         }
@@ -316,6 +325,7 @@ namespace AUi
                 {
 
                     var request1 = service.Files.Export(fileId, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                  
                     // Add a handler which will be notified on progress changes.
                     // It will notify on each chunk download and when the
                     // download is completed or failed.
@@ -353,7 +363,7 @@ namespace AUi
                 else if (mimetype == ("application/vnd.google-apps.document"))
                 {
                     var request1 = service.Files.Export(fileId, "application/pdf");
-
+                   
 
                     request1.MediaDownloader.ProgressChanged +=
                         progress =>
@@ -390,7 +400,7 @@ namespace AUi
                 {
                     var request1 = service.Files.Get(fileId);
 
-
+                    request1.SupportsAllDrives = true;
                     request1.MediaDownloader.ProgressChanged +=
                         progress =>
                         {
@@ -472,6 +482,7 @@ namespace AUi
             perms.EmailAddress = mailid;
             DriveService service = Authentication();
             var req = service.Permissions.Create(perms, fileid);
+            req.SupportsAllDrives = true;
             req.SendNotificationEmail = send_notification;
             req.Execute();
 

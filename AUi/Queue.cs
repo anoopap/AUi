@@ -89,7 +89,7 @@ namespace AUi
                 }
                 else
                 {
-                    throw new SystemException("Reques failed");
+                    throw new SystemException("Request failed");
                 }
 
             }
