@@ -347,3 +347,5 @@ C:\Users\harisn\source\repos\anoopap\AUi\AUi\obj\Debug\AUi.csproj.CoreCompileInp
 C:\Users\harisn\source\repos\anoopap\AUi\AUi\obj\Debug\AUi.csproj.CopyComplete
 C:\Users\harisn\source\repos\anoopap\AUi\AUi\obj\Debug\AUi.dll
 C:\Users\harisn\source\repos\anoopap\AUi\AUi\obj\Debug\AUi.pdb
+C:\Users\harisn\Source\Repos\anoopap\AUi\AUi\bin\Debug\BitMiracle.Docotic.Pdf.dll
+C:\Users\harisn\Source\Repos\anoopap\AUi\AUi\bin\Debug\BitMiracle.Docotic.Pdf.xml
